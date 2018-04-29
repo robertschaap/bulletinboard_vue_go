@@ -6,24 +6,28 @@ import (
 	"github.com/gorilla/mux"
 	"log"
 	"net/http"
+	"strconv"
 
 	"../models"
 )
 
+func getCommentHandler(w http.ResponseWriter, r *http.Request) {
+	v := r.URL.Query()
+	sort := v.Get("sort")
+	offset, _ := strconv.ParseUint(v.Get("offset"), 10, 32)
 
-func getComments(w http.ResponseWriter, r *http.Request) {
-	comment := models.GetComments()
+	comment := models.GetComments(uint(offset), sort)
 
 	w.Header().Set("Content-Type", "application/json")
 	json.NewEncoder(w).Encode(comment)
 }
 
 // APIController Routes
-func APIController(p string) {
+func APIController(port string) {
 
 	router := mux.NewRouter()
-	router.HandleFunc("/api/comment", getComments).Methods("GET")
+	router.HandleFunc("/api/comment", getCommentHandler).Methods("GET")
 
-	fmt.Println("Running on port"+p)
-	log.Fatal(http.ListenAndServe(p, router))
+	fmt.Println("Running on port"+port)
+	log.Fatal(http.ListenAndServe(port, router))
 }

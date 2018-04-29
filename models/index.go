@@ -20,22 +20,24 @@ type Comment struct {
 }
 
 // GetComments sends data to controler
-func GetComments() []Comment {
+func GetComments(page uint, sort string) []Comment {
 	var sess, err = mongo.Open(settings)
 	if err != nil {
-		log.Fatalf("Cannot open: %p", err)
+		log.Fatal(err)
 	}
 	defer sess.Close()
 
-	res := sess.Collection("comments").Find()
+	res := sess.Collection("comments").
+		Find().
+		OrderBy("createdAt DESC").
+		Paginate(4)
 
 	var comments []Comment
-	if err := res.All(&comments); err != nil {
-		log.Fatalf("Cannot read comments: %p", err)
-	}
 
-	for _, comment := range comments {
-		log.Printf("%q\n", comment.Title)
+	err = res.Page(page).All(&comments)
+
+	if err != nil {
+		log.Fatal(err)
 	}
 
 	return comments
