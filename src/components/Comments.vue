@@ -53,11 +53,15 @@
         fetch(`/api/comment?offset=${offset}&sort=${sortDirection}`)
         .then(res => res.json())
         .then(data => {
+          if (!data) {
+            return;
+          }
+
           this.comments = [
             ...this.comments,
             ...data
           ]
-          this.offset += 4;
+          this.offset ++;
         });
       }
     }
@@ -69,7 +73,7 @@
     background-color: #33cc8f;
     padding: 2rem 0rem;
   }
-  
+
   h2 {
     text-align: center;
     font-weight: 200;
