@@ -1,21 +1,20 @@
-# bulletinboard_vue_go
+# Bulletin Board
+A simple bulletin board where you can leave a message and which is populated dynamically from a database with pagination.
 
-> A Vue.js project
+##### Technologies
+HTML5 | CSS3 | JavasScript | Go | Mux
+Vue | Vuex | MongoDB | Upper-DB
 
-## Build Setup
+### Scope
+##### What was designed to do
++ Be a simple bulletin board
++ Allow a user to post a message with title and pick an avatar
++ Be an introduction to Go
 
-``` bash
-# install dependencies
-npm install
+##### What it wasn't designed to do
+- Manage sessions or users
+- Upload a picture of your own
+- Be anything more than a simple bulletin board
 
-# serve with hot reload at localhost:8080
-npm run dev
-
-# build for production with minification
-npm run build
-
-# build for production and view the bundle analyzer report
-npm run build --report
-```
-
-For a detailed explanation on how things work, check out the [guide](http://vuejs-templates.github.io/webpack/) and [docs for vue-loader](http://vuejs.github.io/vue-loader).
+### Installation Notes
+If you are looking to install this locally, please feel free to clone or download the repository. Modules are all included in the package.json but please note that you will need to have MongoDB installed locally as well. As this is my first simple Go playground as well, some of the Go setup (particularly on Gopath) could be suboptimal.
