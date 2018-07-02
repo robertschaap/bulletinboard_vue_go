@@ -22,11 +22,19 @@ func getCommentHandler(w http.ResponseWriter, r *http.Request) {
 	json.NewEncoder(w).Encode(comment)
 }
 
+func postCommentHandler(w http.ResponseWriter, r *http.Request) {
+	var formbody models.Comment
+	json.NewDecoder(r.Body).Decode(&formbody)
+
+	models.PostComment(formbody)
+}
+
 // APIController Routes
 func APIController(port string) {
 
 	router := mux.NewRouter()
 	router.HandleFunc("/api/comment", getCommentHandler).Methods("GET")
+	router.HandleFunc("/api/comment/new", postCommentHandler).Methods("POST")
 
 	fmt.Println("Running on port"+port)
 	log.Fatal(http.ListenAndServe(port, router))

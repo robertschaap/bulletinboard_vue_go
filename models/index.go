@@ -1,6 +1,7 @@
 package models
 
 import (
+	"fmt"
 	"log"
 	"upper.io/db.v3/mongo"
 )
@@ -13,10 +14,10 @@ var settings = mongo.ConnectionURL{
 
 // Comment struct
 type Comment struct {
+	Name		string	`json:"name"`
 	Title		string	`json:"title"`
 	Body		string	`json:"body"`
 	Avatar	string	`json:"avatar"`
-	Name		string	`json:"name"`
 }
 
 // GetComments sends data to controler
@@ -41,4 +42,21 @@ func GetComments(page uint, sort string) []Comment {
 	}
 
 	return comments
+}
+
+// PostComment takes form data and creates new document
+func PostComment(comment Comment) {
+	var sess, err = mongo.Open(settings)
+	if err != nil {
+		log.Fatal(err)
+	}
+	defer sess.Close()
+
+	res, err := sess.Collection("comments").Insert(comment)
+
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	fmt.Println(res)
 }
