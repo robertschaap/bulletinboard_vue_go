@@ -36,6 +36,6 @@ func APIController(port string) {
 	router.HandleFunc("/api/comment", getCommentHandler).Methods("GET")
 	router.HandleFunc("/api/comment/new", postCommentHandler).Methods("POST")
 
-	fmt.Println("Running on port"+port)
+	fmt.Println("Running on http://localhost"+port)
 	log.Fatal(http.ListenAndServe(port, router))
 }
